@@ -23,7 +23,7 @@ require __DIR__ . '/koneksi.php';
         if(mysqli_num_rows($query) > 0) {
             $data = mysqli_fetch_array($query);
             $_SESSION['login'] = $data;
-            echo '<script>alert("Login berhasil! ' .$data['username'].'"); location.href="index.php";</script>';
+            echo '<script>alert("Login berhasil! ' .$data['username'].'"); location.href="../dashboard/dashboard.php";</script>';
         } else {
             echo '<script>alert("Username atau password salah.");</script>';
         }

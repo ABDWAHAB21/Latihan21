@@ -1,0 +1,220 @@
+
+:root {
+    --dark-blue: #0a1128;
+    --light-blue: #1a237e;
+    --yellow: #ffd700;
+    --light-yellow: #fff59d;
+    --white: #ffffff;
+    --biru: #0b5384;
+    --teks: #1a1a1a;
+    --abu: #9aa8b5;
+    --garis: #dde3ea;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* body::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .8);
+} */
+
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 30px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.logo img { 
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    padding-left: 5px;
+
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    padding-right: 5px;
+}
+
+
+.nav-link {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: 500px;
+    position: relative;
+}
+
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    border-radius: 5px;
+    background: rgb(147, 138, 156);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.wadah { 
+    max-width: 1280px; margin: 0 auto;
+    padding: 140px 24px 40px;
+}
+
+  /* ---------- TAB ---------- */
+  .tab {
+    display: flex;
+    border-bottom: 3px solid #f1f3f5;
+    margin-bottom: 32px;
+  }
+  .tab button {
+    flex: 1;
+    max-width: 218px;
+    padding: 14px 0;
+    border: 0;
+    background: none;
+    font: 600 18px/1 inherit;
+    color: var(--abu);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;          /* garis aktif menimpa garis dasar */
+  }
+  .tab button[aria-selected="true"] {
+    color: var(--teks);
+    font-weight: 700;
+    border-bottom-color: var(--biru);
+  }
+
+  /* ---------- GRID ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 34px;
+  }
+
+  /* ---------- CARD ---------- */
+  .card {
+    border: 1px solid var(--garis);
+    border-radius: 16px;
+    overflow: hidden;              /* sudut gambar ikut membulat */
+    background: #fff;
+  }
+  .card__gambar {
+    position: relative;
+    aspect-ratio: 389 / 252;
+    background: linear-gradient(180deg, #bcd7ee 0%, #e8eef3 55%, #8aa27a 100%);
+  }
+  .card__gambar img {              /* kalau pakai foto asli */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .panah {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    user-select: none;
+    text-shadow: 0 1px 3px rgba(0,0,0,.3);
+  }
+  .panah--kiri { left: 18px; }
+  .panah--kanan { right: 18px; }
+
+  .titik {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+  }
+  .titik span {
+    width: 32px;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255,255,255,.55);
+  }
+  .titik span:first-child { background: #fff; }
+
+  .card__isi { padding: 16px 16px 16px; }
+  .card__tipe { margin: 0; font-size: 20px; font-weight: 500; }
+  .card__label { margin: 14px 0 2px; font-size: 13px; color: var(--abu); }
+  .card__harga { margin: 0; font-size: 24px; font-weight: 700; color: var(--biru); }
+
+  /* ---------- SPESIFIKASI ---------- */
+  .spek {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin: 20px 0 18px;
+    padding: 20px 0 0;
+    border-top: 1px solid var(--garis);
+    list-style: none;
+    font-size: 14px;
+  }
+  .spek li { display: flex; align-items: center; gap: 6px; }
+  .spek svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: var(--abu);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ---------- TOMBOL ---------- */
+  .aksi { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 0;
+    border-radius: 8px;
+    border: 1px solid var(--biru);
+    font: 600 17px/1 inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn--garis { background: #fff; color: var(--teks); }
+  .btn--isi { background: var(--biru); color: #fff; }
+  .btn:hover { filter: brightness(.95); }
+  .btn:focus-visible, .tab button:focus-visible {
+    outline: 3px solid #7fb4de;
+    outline-offset: 2px;
+  }
