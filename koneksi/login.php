@@ -1,6 +1,32 @@
 <?php
 session_start();
 require __DIR__ . '/koneksi.php';
+
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    $stmt = mysqli_prepare($koneksi, 'SELECT username, nama, password, role FROM login WHERE username = ?');
+    mysqli_stmt_bind_param($stmt, 's', $username);
+    mysqli_stmt_execute($stmt);
+    $user = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+    mysqli_stmt_close($stmt);
+
+    if ($user && password_verify($password, $user['password'])) {
+        if ($user['role'] === 'admin') {
+            session_regenerate_id(true);
+            $_SESSION['admin_nama'] = $user['nama'] !== '' ? $user['nama'] : $user['username'];
+            $_SESSION['role'] = 'admin';
+            header('Location: ../dashboard/dashboard.php');
+            exit;
+        }
+        $error = 'Akun ini tidak memiliki akses admin.';
+    } else {
+        $error = 'Username atau password salah.';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -14,25 +40,6 @@ require __DIR__ . '/koneksi.php';
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <?php
-    if(isset($_POST['username'])) {
-        $username = $_POST['username'];
-        $password = md5($_POST['password']);
-
-        $query = mysqli_query($koneksi, "SELECT * FROM login WHERE username='$username' AND password='$password'");
-        if(mysqli_num_rows($query) > 0) {
-            $data = mysqli_fetch_array($query);
-            $_SESSION['login'] = $data;
-            echo '<script>alert("Login berhasil! ' .$data['username'].'"); location.href="../dashboard/dashboard.php";</script>';
-        } else {
-            echo '<script>alert("Username atau password salah.");</script>';
-        }
-    }
-
-    
-    ?>
-
-
     <section class="login-section">
         <div class="login-box">
             <form method="post" action="">
@@ -44,13 +51,16 @@ require __DIR__ . '/koneksi.php';
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" name="password" placeholder="" required>>
+                    <input type="password" name="password" placeholder="" required>
                     <label>Password</label>
                 </div>
                 <div class="remember-forgot">
                     <label><input type="checkbox"> Remember me</label>
                     <a href="#">Forgot password?</a>
                 </div>
+                <?php if ($error): ?>
+                    <p style="color:red; text-align:center;"><?= htmlspecialchars($error) ?></p>
+                <?php endif; ?>
                 <button type="submit">Login</button>
                 <div class="register-link">
                     <p>Don't have an account? <a href="register.php">Register</a></p>
