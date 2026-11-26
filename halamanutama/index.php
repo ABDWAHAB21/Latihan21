@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web</title>
-    <link rel="stylesheet" href="desain.css">
+    <link rel="stylesheet" href="desain.css?v=3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -93,8 +93,8 @@
         <article class="card">
         <div class="card__gambar">
             <img src="asset/VERLINA1.jpeg" alt="Tipe L8">
-            <span class="panah panah--kiri">‹</span>
-            <span class="panah panah--kanan">›</span>
+            <span class="panah panah--kiri"></span>
+            <span class="panah panah--kanan"></span>
             <div class="titik"><span></span><span></span><span></span><span></span></div>
         </div>
         <div class="card__isi">
@@ -126,6 +126,46 @@
         });
         tombol.setAttribute('aria-selected', 'true');
         });
+    });
+
+    document.querySelectorAll('.card__gambar').forEach(function (wadahGambar) {
+        var gambar = wadahGambar.querySelector('img');
+        var rotasiX = 0;
+        var rotasiY = 0;
+        var posisiAwalX = 0;
+        var posisiAwalY = 0;
+        var rotasiAwalX = 0;
+        var rotasiAwalY = 0;
+
+        wadahGambar.addEventListener('pointerdown', function (event) {
+            if (event.button !== 0) return;
+
+            posisiAwalX = event.clientX;
+            posisiAwalY = event.clientY;
+            rotasiAwalX = rotasiX;
+            rotasiAwalY = rotasiY;
+            wadahGambar.classList.add('is-dragging');
+            wadahGambar.setPointerCapture(event.pointerId);
+        });
+
+        wadahGambar.addEventListener('pointermove', function (event) {
+            if (!wadahGambar.hasPointerCapture(event.pointerId)) return;
+
+            rotasiY = Math.max(-25, Math.min(25, rotasiAwalY + (event.clientX - posisiAwalX) * 0.4));
+            rotasiX = Math.max(-18, Math.min(18, rotasiAwalX - (event.clientY - posisiAwalY) * 0.4));
+            gambar.style.setProperty('--rotate-x', rotasiX + 'deg');
+            gambar.style.setProperty('--rotate-y', rotasiY + 'deg');
+        });
+
+        function selesaiGeser(event) {
+            if (wadahGambar.hasPointerCapture(event.pointerId)) {
+                wadahGambar.releasePointerCapture(event.pointerId);
+            }
+            wadahGambar.classList.remove('is-dragging');
+        }
+
+        wadahGambar.addEventListener('pointerup', selesaiGeser);
+        wadahGambar.addEventListener('pointercancel', selesaiGeser);
     });
 </script>
 </body>

@@ -1,3 +1,12 @@
+:root {
+    --green: #477a55;
+    --green-dark: #315b3d;
+    --green-light: #eaf3e9;
+    --text: #202620;
+    --muted: #727d73;
+    --line: #dce5dc;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,62 +15,67 @@
 }
 
 body {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    min-height: 100vh;
-    background: url(logo.png) no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
-body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, .8);
-    z-index: 0;
+    background:
+        linear-gradient(135deg, rgba(234, 243, 233, .76), rgba(235, 239, 235, .82));
+    color: var(--text);
 }
 
 .register-section {
+    position: relative;
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     min-height: 100vh;
     padding: 24px 16px;
-    position: relative;
-    z-index: 1;
 }
 
 .register-box {
     position: relative;
-    width: 400px;
-    min-height: 450px;
-    max-height: calc(100vh - 48px);
-    overflow-y: auto;
-    background: transparent;
-    backdrop-filter: blur(15px);
-    border: 2px solid rgb(255, 255, 255, .5);
-    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 24px 0;
+    width: min(440px, 100%);
+    min-height: 450px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    padding: 30px 28px;
+    border: 1px solid rgba(255, 255, 255, .78);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, .68);
+    box-shadow: 0 24px 70px rgba(32, 54, 35, .16);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 }
 
-h2 {
-    font-size: 2em;
-    color: #fff;
+.register-box form {
+    width: min(330px, 100%);
+}
+
+.register-box h2 {
+    margin-bottom: 24px;
+    color: var(--text);
+    font-size: 30px;
+    font-weight: 700;
     text-align: center;
+    letter-spacing: -.7px;
 }
 
 .input-box-register {
     position: relative;
-    width: 310px;
-    margin: 24px 0;
-    border-bottom: 2px solid #fff;
+    width: 100%;
+    margin: 22px 0;
+    border-bottom: 1px solid #aebcaf;
+    transition: border-color .2s ease;
+}
+
+.input-box-register:focus-within {
+    border-bottom-color: var(--green);
 }
 
 .input-box-register label {
@@ -69,118 +83,145 @@ h2 {
     top: 50%;
     left: 5px;
     transform: translateY(-50%);
-    font-size: 1em;
-    color: #fff;
+    color: var(--muted);
+    font-size: 14px;
     pointer-events: none;
-    transition: .5s;
+    transition: top .2s ease, color .2s ease, font-size .2s ease;
 }
 
-.input-box-register input:focus~label,
-.input-box-register input:not(:placeholder-shown)~label {
+.input-box-register input:focus ~ label,
+.input-box-register input:not(:placeholder-shown) ~ label,
+.input-box-register > label[for] {
     top: -5px;
-    font-size: .8em;
+    color: var(--green-dark);
+    font-size: 12px;
 }
 
-.input-box-register input {
+.input-box-register input:not([type="radio"]) {
     width: 100%;
-    height: 50px;
+    height: 48px;
+    padding: 0 36px 0 5px;
+    border: 0;
+    outline: 0;
     background: transparent;
-    border: none;
-    outline: none;
-    color: #fff;
-    font-size: 1em;
-    padding: 0 35px 0 5px;
+    color: var(--text);
+    font-size: 15px;
 }
 
 .input-box-register .icon {
     position: absolute;
+    top: 0;
     right: 8px;
-    color: #fff;
-    font-size: 1.2em;
-    line-height: 57px;
-    z-index: 2;
+    color: var(--green);
+    font-size: 18px;
+    line-height: 48px;
 }
 
 .input-box-register select {
     width: 100%;
-    height: 50px;
+    height: 48px;
+    padding: 12px 28px 0 5px;
+    border: 0;
+    outline: 0;
     background: transparent;
-    border: none;
-    outline: none;
-    color: #fff;
-    font-size: 1em;
-    padding: 0 5px;
+    color: var(--text);
+    font-size: 14px;
     cursor: pointer;
 }
 
 .input-box-register select option {
-    color: #000;
+    color: var(--text);
 }
 
 .input-box-register select:disabled {
+    color: #929b93;
     cursor: not-allowed;
-    opacity: .6;
-}
-
-.input-box-register > label[for] {
-    top: -5px;
-    font-size: .8em;
 }
 
 .input-box-register .label {
     display: block;
-    color: #fff;
-    font-size: .8em;
     margin: 0 0 8px 5px;
+    color: var(--muted);
+    font-size: 12px;
 }
 
 .input-box-register .radio {
     position: static;
     display: inline-flex;
     align-items: center;
-    transform: none;
-    margin: 8px 14px 10px 5px;
-    font-size: .9em;
+    margin: 5px 14px 10px 5px;
+    color: #525d53;
+    font-size: 14px;
     pointer-events: auto;
+    transform: none;
 }
 
 .input-box-register .radio input {
     width: auto;
     height: auto;
     margin-right: 6px;
+    accent-color: var(--green);
 }
 
-button {
+.register-box button {
     width: 100%;
-    height: 40px;
-    border: none;
-    background: #fff;
-    outline: none;
-    border-radius: 40px;
-    font-size: 1em;
-    font-weight: 500;
+    min-height: 48px;
+    border: 1px solid var(--green);
+    border-radius: 12px;
+    background: var(--green);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
-    color: #000;
+    transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease;
 }
 
-button:hover {
-    background: #fff;
-    color: #000;
+.register-box button:hover {
+    transform: translateY(-2px);
+    background: var(--green-dark);
+    box-shadow: 0 8px 18px rgba(49, 91, 61, .2);
 }
 
-.register-link,
 #error,
 #registration-error {
+    margin-top: 12px;
+    color: #a33333;
+    font-size: 13px;
     text-align: center;
-    color: #fff;
+}
+
+.register-box button:focus-visible {
+    outline: 3px solid #a9c9ad;
+    outline-offset: 3px;
+}
+
+.register-box input,
+.register-box select {
+    outline: none;
 }
 
 @media (max-width: 480px) {
+    .register-section {
+        padding: 16px 12px;
+    }
+
     .register-box {
         width: 100%;
+        min-height: 420px;
+        max-height: calc(100vh - 32px);
+        padding: 26px 20px;
+        border-radius: 20px;
     }
 
     .input-box-register {
-        width: min(310px, calc(100vw - 64px));
+        margin: 20px 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: .01ms !important;
     }
 }
